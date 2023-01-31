@@ -1,10 +1,10 @@
-package com.gds.challenge.gdsswebe;
+package com.challenge.gdsswechallengebe;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class GdsSweBeApplicationTests {
+class GdsSweChallengeBeApplicationTests {
 
 	@Test
 	void contextLoads() {
