@@ -2,7 +2,6 @@ package com.challenge.gdsswechallengebe.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,12 +34,16 @@ public class UserFileUploadController {
             try {
                 fileUploadService.uploadFile(file);
 
-                message = "File uploaded successfully!" + file.getOriginalFilename();
+                message = "File uploaded successfully!";
                 return ResponseEntity.status(HttpStatus.OK).body(new FileUploadResponseDto(message));
 
+            } catch (IllegalArgumentException e) {
+                message = "File upload failed!";
+                return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new FileUploadResponseDto(message));
+                
             } catch (Exception e) {
 
-                message = "File upload failed!" + file.getOriginalFilename();
+                message = "File upload failed!";
                 return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new FileUploadResponseDto(message));
             }
         }
