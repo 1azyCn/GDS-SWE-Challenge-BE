@@ -1,9 +1,9 @@
 package com.challenge.gdsswechallengebe.service;
 
+import java.io.InputStream;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import com.opencsv.exceptions.CsvValidationException;
 
 @Service
 public interface FileUploadService {
@@ -12,5 +12,5 @@ public interface FileUploadService {
     public boolean checkFileFormat(MultipartFile file);
     
     // Upload Csv file
-    public void uploadFile(MultipartFile file);
+    public void uploadFile(InputStream is);
 }
