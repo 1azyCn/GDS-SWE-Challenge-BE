@@ -1,5 +1,7 @@
 package com.challenge.gdsswechallengebe.service;
 
+import java.io.InputStream;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -10,5 +12,5 @@ public interface FileUploadService {
     public boolean checkFileFormat(MultipartFile file);
     
     // Upload Csv file
-    public void uploadFile(MultipartFile file);
+    public void uploadFile(InputStream is);
 }

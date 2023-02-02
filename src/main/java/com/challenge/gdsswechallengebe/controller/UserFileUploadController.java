@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.challenge.gdsswechallengebe.dto.response.FileUploadResponseDto;
@@ -27,12 +28,12 @@ public class UserFileUploadController {
     // Response = (SUCCESS : HTTP 200 OK, ERROR : )
     @RequestMapping(method = RequestMethod.POST, path = "/upload")
     @ResponseBody
-    public ResponseEntity<FileUploadResponseDto> uploadFile(MultipartFile file) {
+    public ResponseEntity<FileUploadResponseDto> uploadFile(@RequestParam("file") MultipartFile file) {
         String message = "";
 
         if (fileUploadService.checkFileFormat(file)) {
             try {
-                fileUploadService.uploadFile(file);
+                fileUploadService.uploadFile(file.getInputStream());
 
                 message = "File uploaded successfully!";
                 return ResponseEntity.status(HttpStatus.OK).body(new FileUploadResponseDto(message));
