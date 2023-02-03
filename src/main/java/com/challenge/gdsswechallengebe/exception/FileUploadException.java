@@ -1,5 +1,7 @@
 package com.challenge.gdsswechallengebe.exception;
 
-public class FileUploadException {
+public class FileUploadException extends Exception{
+    private String statusCode;
+    private String message;
     
 }
