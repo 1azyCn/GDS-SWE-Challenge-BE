@@ -15,10 +15,10 @@ import lombok.Setter;
 public class Employee {
 
     @Id
-    @Column (name= "id")
+    @Column (name= "id", unique = true)
     private String id;
     
-    @Column (name= "login")
+    @Column (name= "login", unique = true)
     private String login;
     
     @Column (name= "name")

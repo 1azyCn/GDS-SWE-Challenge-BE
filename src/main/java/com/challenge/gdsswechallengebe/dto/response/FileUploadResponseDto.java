@@ -1,18 +1,18 @@
 package com.challenge.gdsswechallengebe.dto.response;
 
+import org.springframework.http.HttpStatus;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class FileUploadResponseDto {
     private String message;
-    private String statusCode;
+    private HttpStatus statusCode;
 
-    public FileUploadResponseDto (String message) {
+    public FileUploadResponseDto (String message, HttpStatus statusCode) {
         this.message = message;
-      }
-    
-      public String getMessage() {
-        return message;
-      }
-    
-      public void setMessage(String message) {
-        this.message = message;
+        this.statusCode = statusCode;
       }
 }

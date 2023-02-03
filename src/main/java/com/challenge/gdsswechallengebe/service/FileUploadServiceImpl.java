@@ -6,14 +6,19 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.tomcat.util.http.fileupload.FileUploadException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.challenge.gdsswechallengebe.dto.response.FileUploadResponseDto;
 import com.challenge.gdsswechallengebe.model.Employee;
 import com.challenge.gdsswechallengebe.repository.EmployeeRepository;
 
@@ -86,10 +91,30 @@ public class FileUploadServiceImpl implements FileUploadService {
                         if (checkSalaryFormat(employee) || checkSalaryDecimalPlace(employee)) {
                             throw new IllegalArgumentException();
                         }
+
+                        // Check if reords already exits in DB
+                        Optional <Employee> employeeExist = employeeRepository.findById(employee.getId());
+
+                        // if similar employee id exists
+                        if(employeeExist.isPresent()) {
+                            Employee emp = employeeExist.get();
+
+                            Optional <Employee> employeeLogin = employeeRepository.findByLogin(employee.getLogin()); 
+                            
+                            if (employeeLogin.isPresent()) {
+                                throw new IllegalArgumentException();
+                            } else {
+                                emp.setName(employee.getName());
+                                emp.setSalary(employee.getSalary());
+                                emp.setLogin(employee.getLogin());
+
+                                employeeRepository.save(emp);
+                            }
+                        } else {
+                            employeeRecords.add(employee);
+                        }
         
                         // log.info("What is this final employee ->" + employee.getId());
-                        
-                        employeeRecords.add(employee);
                     } else {
                         throw new IllegalArgumentException();
                     }
